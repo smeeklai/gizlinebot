@@ -19,13 +19,13 @@ var lineBotCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		validateEnv()
 
-		// s, err := storage.NewSql("user:pass@tcp(127.0.0.1:3306)/gizsurvey")
 		s, err := storage.NewSql(cfgStr("SQL_USER") + ":" + cfgStr("SQL_PASS") + "@(" + cfgStr("SQL_HOST") + ":" + cfgStr("SQL_PORT") + ")/" + cfgStr("SQL_DB"))
 		checkErr(err)
 
 		port := cfgStr("SERVER_PORT")
 		server, err := line.NewLineServer(port, s, viper.GetString("GIZLB_LINE_SECRET"), viper.GetString("GIZLB_LINE_TOKEN"))
 		checkErr(err)
+
 		err = server.Serve()
 		checkErr(err)
 	},
