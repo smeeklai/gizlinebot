@@ -84,10 +84,9 @@ func (ls *LineServer) Serve() error {
 			}
 
 			if event.Type == linebot.EventTypeMessage {
-				// fmt.Printf("\ntype: %q \ntoken: %q \nstring: %q", string(event.Type), event.ReplyToken, string(eventString))													
+				// fmt.Printf("\ntype: %q \ntoken: %q \nstring: %q", string(event.Type), event.ReplyToken, string(eventString))
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-<<<<<<< HEAD
 					err = ls.Survey.RecordAnswer(userId, message.Text)
 					if err != nil {
 						log.Print(err)
@@ -102,10 +101,6 @@ func (ls *LineServer) Serve() error {
 					fmt.Printf("\nUser [id: %s] said: %s", userId, message.Text)
 
 					if _, err = ls.Bot.PushMessage(userId, linebot.NewTextMessage(question.Text)).Do(); err != nil {
-=======
-					fmt.Printf("\ntest boss")
-					if _, err = ls.Bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
->>>>>>> update path to smeeklai
 						log.Print(err)
 					}
 				}
