@@ -15,3 +15,5 @@
 vendor/
 
 .env
+ngrok
+.gizlinebot.toml
