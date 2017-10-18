@@ -3,9 +3,9 @@ package cmd
 import (
 	"errors"
 
-	"github.com/VagabondDataNinjas/gizlinebot/line"
+	"github.com/smeeklai/gizlinebot/line"
 
-	"github.com/VagabondDataNinjas/gizlinebot/storage"
+	"github.com/smeeklai/gizlinebot/storage"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
