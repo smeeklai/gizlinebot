@@ -36,4 +36,9 @@ eg: https://d2631531.ngrok.io/linewebhook
 
 # start the bot
 go run main.go lineBot
+# in case you manually set $GOPATH, the above command will not work
+# do
+cd github.com/{git_account_name}/gizlinebot
+go build main.go
+$GOPATH/bin/gizlinebot lineBot --config .gizlinebot.toml
 ```
