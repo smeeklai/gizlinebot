@@ -1,7 +1,8 @@
 package main
 
 import (
-	"github.com/smeeklai/gizlinebot/cmd"
+	"github.com/VagabondDataNinjas/gizlinebot/cmd"
+	// "github.com/smeeklai/gizlinebot/cmd"
 )
 
 func main() {
