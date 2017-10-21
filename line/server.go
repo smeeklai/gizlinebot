@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/VagabondDataNinjas/gizlinebot/storage"
-	// "github.com/smeeklai/gizlinebot/storage"
+	// "github.com/VagabondDataNinjas/gizlinebot/storage"
+	"github.com/smeeklai/gizlinebot/storage"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
@@ -62,8 +62,10 @@ func (ls *LineServer) Serve() error {
 			}
 
 			if event.Type == linebot.EventTypeMessage {
+				// fmt.Printf("\ntype: %q \ntoken: %q \nstring: %q", string(event.Type), event.ReplyToken, string(eventString))													
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
+					fmt.Printf("\ntest boss")
 					if _, err = ls.Bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
 						log.Print(err)
 					}
