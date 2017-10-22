@@ -1,6 +1,8 @@
 package storage
 
 type Storage interface {
-	AddRawLineEvent(eventType, replyToken, rawMsg string) error
+	// used for after-the-fact debugging
+	AddRawLineEvent(eventType, rawMsg string) error
+	AddUserProfile(userId, displayName string) error
 	Close() error
 }

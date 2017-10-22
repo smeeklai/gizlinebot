@@ -33,7 +33,7 @@ func (ls *LineServer) Serve() error {
 
 	// Setup HTTP Server for receiving requests from LINE platform
 	http.HandleFunc("/linewebhook", func(w http.ResponseWriter, req *http.Request) {
-		fmt.Printf("\nReqqqq: %s\n", req)
+		fmt.Printf("\nRequest: %+v\n", req)
 		events, err := ls.Bot.ParseRequest(req)
 		if err != nil {
 			if err == linebot.ErrInvalidSignature {
@@ -50,22 +50,41 @@ func (ls *LineServer) Serve() error {
 				log.Printf("[err] Could not marshal event: %+v; err: %s", event, err)
 				continue
 			}
-			err = ls.Storage.AddRawLineEvent(string(event.Type), event.ReplyToken, string(eventString))
+			log.Printf("\nEvent string: %s\n", eventString)
+			err = ls.Storage.AddRawLineEvent(string(event.Type), string(eventString))
 			if err != nil {
 				log.Printf("[err] Could not store event: %+v; err: %s", event, err)
-				continue
 			}
 
 			if event.Type == linebot.EventTypeFollow {
+				userProfileResp, err := ls.Bot.GetProfile(event.Source.UserID).Do()
+				if err != nil {
+					log.Print(err)
+					continue
+				}
 
+				err = ls.Storage.AddUserProfile(userProfileResp.UserID, userProfileResp.DisplayName)
+				if err != nil {
+					fmt.Printf("AddUserProfile err: %s\n", err)
+					continue
+				}
 			}
 
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-					if _, err = ls.Bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+					if _, err = ls.Bot.PushMessage(event.Source.UserID, linebot.NewTextMessage(message.Text)).Do(); err != nil {
 						log.Print(err)
 					}
+					userProfileResp, err := ls.Bot.GetProfile(event.Source.UserID).Do()
+					if err != nil {
+						log.Print(err)
+					}
+
+					log.Printf("\nuserProfile: %+v\n", userProfileResp)
+					// if _, err = ls.Bot.ReplyMessage(event.Source.UserID, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+					// 	log.Print(err)
+					// }
 				}
 			}
 		}
