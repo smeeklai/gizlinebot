@@ -30,7 +30,6 @@ func NewLineServer(port string, storage storage.Storage, secret, token string) (
 }
 
 func (ls *LineServer) Serve() error {
-
 	// Setup HTTP Server for receiving requests from LINE platform
 	http.HandleFunc("/linewebhook", func(w http.ResponseWriter, req *http.Request) {
 		fmt.Printf("\nRequest: %+v\n", req)

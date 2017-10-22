@@ -2,7 +2,17 @@
 
 ## Setup the line bot on your local
 
+Requirements: 
+
+* Golang
+* Dep: https://github.com/golang/dep
+* Line account with a messaging API provider: https://developers.line.me/console/register/messaging-api/provider/
+
 ```
+git clone git@github.com:VagabondDataNinjas/gizlinebot.git
+cd gizlinebot
+dep install
+
 # config file
 cp .gizlinebot.example.toml ~/.gizlinebot.toml
 # update ~/.gizlinebot.toml with the values for
