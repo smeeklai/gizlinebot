@@ -5,7 +5,8 @@
 Requirements: 
 
 * Golang
-* Dep: https://github.com/golang/dep
+* Golang Dependency tool: https://github.com/golang/dep
+* Mysql server
 * Line account with a messaging API provider: https://developers.line.me/console/register/messaging-api/provider/
 
 ```
@@ -18,7 +19,9 @@ cp .gizlinebot.example.toml ~/.gizlinebot.toml
 # update ~/.gizlinebot.toml with the values for
 # GIZLB_LINE_TOKEN and GIZLB_LINE_SECRET from the
 # line developer area Messaging API(https://developers.line.me/)
-# set the config for the SQL parameters
+# set correct the config for the SQL parameters
+
+# import the SQL Schema from assets/init.sql
 
 # install ngrok
 # https://ngrok.com/download
