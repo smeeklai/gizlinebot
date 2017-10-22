@@ -65,7 +65,6 @@ func (ls *LineServer) Serve() error {
 				// fmt.Printf("\ntype: %q \ntoken: %q \nstring: %q", string(event.Type), event.ReplyToken, string(eventString))													
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-					fmt.Printf("\ntest boss")
 					if _, err = ls.Bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
 						log.Print(err)
 					}
