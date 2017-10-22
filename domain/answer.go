@@ -3,7 +3,7 @@ package domain
 import "time"
 
 type Answer struct {
-	Id         int
+	Id         uint
 	UserId     string
 	QuestionId string
 	Answer     string

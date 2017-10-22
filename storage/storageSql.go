@@ -78,15 +78,42 @@ func (s *Sql) UserHasAnswers(userId string) (bool, error) {
 	return false, nil
 }
 
-func (s *Sql) GetUserLastAnswer(userId string) (answer domain.Answer, err error) {
-	err = s.Db.QueryRow(`SELECT id, userId, questionId, answer, timestamp FROM linebot_answers
-		WHERE userId = ?
+func (s *Sql) UserGetLastAnswer(uid string) (domain.Answer, error) {
+	var id uint
+	var userId string
+	var questionId string
+	var answer string
+	var timestamp int64
+	err := s.Db.QueryRow(`SELECT id, userId, questionId, answer, timestamp FROM linebot_answers
+		WHERE userId = ? AND answer != ""
 		ORDER BY timestamp DESC
 		LIMIT 0,1
-		`, userId).Scan(&answer)
+		`, uid).Scan(&id, &userId, &questionId, &answer, &timestamp)
 	if err != nil {
-		return answer, err
+		var emptyAnswer domain.Answer
+		return emptyAnswer, err
 	}
 
-	return answer, nil
+	return domain.Answer{
+		Id:         id,
+		UserId:     userId,
+		QuestionId: questionId,
+		Answer:     answer,
+		Timestamp:  time.Unix(timestamp, 0),
+	}, nil
+}
+
+func (s *Sql) UserAddAnswer(answer domain.Answer) error {
+	stmt, err := s.Db.Prepare("INSERT INTO linebot_answers(userId, questionId, answer, timestamp) VALUES(?, ?, ?, ?)")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(answer.UserId, answer.QuestionId, answer.Answer, int32(time.Now().UTC().Unix()))
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -9,7 +9,8 @@ type Storage interface {
 	AddRawLineEvent(eventType, rawMsg string) error
 	AddUserProfile(userId, displayName string) error
 	UserHasAnswers(userId string) (bool, error)
-	GetUserLastAnswer(userId string) (domain.Answer, error)
+	UserGetLastAnswer(userId string) (domain.Answer, error)
+	UserAddAnswer(domain.Answer) error
 	// cleanup any connection / file descriptors to the storage
 	Close() error
 }

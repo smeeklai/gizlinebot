@@ -22,6 +22,17 @@ func makeQuestions() *domain.Questions {
 	return qs
 }
 
+func TestAdd(t *testing.T) {
+	qs := makeQuestions()
+	err := qs.Add(ids[0], "existing")
+	if err == nil {
+		t.Fatal("Expected an error but got nil")
+	}
+
+	if err != domain.ErrQuestionsIdExists {
+		t.Fatalf("Expected ErrQuestionsIdExists type but got %T", err)
+	}
+}
 func TestAt(t *testing.T) {
 	qs := makeQuestions()
 	for j, _ := range ids {
@@ -67,5 +78,31 @@ func TestNext(t *testing.T) {
 	}
 	if err != domain.ErrQuestionsNoNext {
 		t.Fatalf("Expected ErrQuestionsNoNext but got %T", err)
+	}
+}
+
+func TestLast(t *testing.T) {
+	qs := makeQuestions()
+
+	last, err := qs.Last()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if last.Id != ids[len(ids)-1] || last.Text != questions[len(questions)-1] {
+		t.Fatalf("Unexpected values for last: %+v", last)
+	}
+}
+
+func TestLastEmpty(t *testing.T) {
+	qs := domain.NewQuestions()
+
+	_, err := qs.Last()
+	if err == nil {
+		t.Fatal("Unexpected lack of error")
+	}
+
+	if err != domain.ErrQuestionsEmpty {
+		t.Fatal("Expected ErrQuestionsEmpty error")
 	}
 }
