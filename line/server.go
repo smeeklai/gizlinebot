@@ -72,6 +72,13 @@ func (ls *LineServer) Serve() error {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
+					lAnswer, err := ls.Storage.GetUserLastAnswer(event.Source.UserID)
+					if err != nil {
+						log.Printf("\nCould not get user answer: %s\n", err)
+					}
+
+					fmt.Printf("\n\n\nLast Answer: %+v\n", lAnswer)
+
 					if _, err = ls.Bot.PushMessage(event.Source.UserID, linebot.NewTextMessage(message.Text)).Do(); err != nil {
 						log.Print(err)
 					}

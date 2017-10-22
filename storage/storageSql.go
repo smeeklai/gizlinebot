@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"time"
 
+	"github.com/VagabondDataNinjas/gizlinebot/domain"
 	"github.com/go-sql-driver/mysql"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -33,6 +34,7 @@ func (s *Sql) AddRawLineEvent(eventType, rawevent string) error {
 	if err != nil {
 		return err
 	}
+	defer stmt.Close()
 	_, err = stmt.Exec(eventType, rawevent, int32(time.Now().UTC().Unix()))
 	if err != nil {
 		return err
@@ -48,6 +50,7 @@ func (s *Sql) AddUserProfile(userID, displayName string) error {
 	if err != nil {
 		return err
 	}
+	defer stmt.Close()
 	_, err = stmt.Exec(userID, displayName, int32(time.Now().UTC().Unix()))
 
 	if err != nil {
@@ -59,4 +62,31 @@ func (s *Sql) AddUserProfile(userID, displayName string) error {
 	}
 
 	return nil
+}
+
+func (s *Sql) UserHasAnswers(userId string) (bool, error) {
+	var hasAnswers int
+	err := s.Db.QueryRow(`SELECT count(id) FROM linebot_answers
+		WHERE userId = ?`, userId).Scan(&hasAnswers)
+	if err != nil {
+		return false, err
+	}
+
+	if hasAnswers > 0 {
+		return true, nil
+	}
+	return false, nil
+}
+
+func (s *Sql) GetUserLastAnswer(userId string) (answer domain.Answer, err error) {
+	err = s.Db.QueryRow(`SELECT id, userId, questionId, answer, timestamp FROM linebot_answers
+		WHERE userId = ?
+		ORDER BY timestamp DESC
+		LIMIT 0,1
+		`, userId).Scan(&answer)
+	if err != nil {
+		return answer, err
+	}
+
+	return answer, nil
 }
