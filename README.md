@@ -6,7 +6,7 @@ Requirements:
 
 * Golang
 * Golang Dependency tool: https://github.com/golang/dep
-* Mysql server
+* Mysql server (see below instructions for importing the schema - assets/init.db)
 * Line account with a messaging API provider: https://developers.line.me/console/register/messaging-api/provider/
 
 ```
