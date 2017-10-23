@@ -1,29 +1,29 @@
 # GIZ Line Bot (App Engine)
 
 ## Setting up
-#### Install and initialize Google Cloud SDK
+### Install and initialize Google Cloud SDK
 **You can skip this part if you prefer to use [Google Cloud Shell](https://cloud.google.com/shell/docs/quickstart) instead**
 
 Follow instruction [here](https://cloud.google.com/appengine/docs/standard/go/download)
 
-#### Create your new yaml file
+### Create your new yaml file
 ```
 cd myapp/
 cp .app-example.yaml YOURNAME-app.yaml
 ```
-#### Config YOURNAME-app.yaml
+### Config YOURNAME-app.yaml
 - Specify your `service` name
 - Update your `CHANNEL_SECRET` and `CHANNEL_TOKEN` from the line developer area [Messaging API](https://developers.line.me/)
 
 ## Run the line bot locally
-#### Setup mysql server on your local machine
+### Setup mysql server on your local machine
 1. Install via [Homebrew](https://gist.github.com/nrollr/3f57fc15ded7dddddcc4e82fe137b58e) or Download and install mysql community server [here](https://dev.mysql.com/downloads/mysql/)
 2. Import the SQL Schema from assets/init.sql
 
-#### Setup ngrok
+### Setup ngrok
 Install [ngrok](https://ngrok.com/download)
 
-#### Start the bot
+### Start the bot
 1. Config parameters in YOURNAME-app.yaml
     - Must Set `LOCAL_DB` in YOURNAME-app.yaml to `True`
     - Set your SQL parameters
