@@ -12,9 +12,9 @@ handlers:
 env_variables:
   CHANNEL_SECRET: ''
   CHANNEL_TOKEN: ''
-  LOCAL_DB: True # Make this to "False" in case you want to connect to mysql db on Google SQL
+  LOCAL_DB: False
   GIZLB_SQL_USER: gizlinebot
   GIZLB_SQL_PASS: 'Mpmc3EzwUU06Pq9hq8T55fEnaN2okglRd5CPS2i4fcA'
-  GIZLB_SQL_HOST: '127.0.0.1' # vagabonddataninjas:asia-east1:gizsurvey - Uncomment this to connect with Google SQL
+  GIZLB_SQL_HOST: vagabonddataninjas:asia-east1:gizsurvey
   GIZLB_SQL_PORT: '3306'
   GIZLB_SQL_DB: gizsurvey
