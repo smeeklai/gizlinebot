@@ -17,3 +17,4 @@ vendor/
 .env
 ngrok
 .gizlinebot.toml
+myapp/boss-app.yaml

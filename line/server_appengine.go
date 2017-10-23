@@ -2,8 +2,8 @@ package line
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
-	// "log"
 	"net/http"
 
 	"google.golang.org/appengine"
@@ -34,13 +34,20 @@ func ServeAppEngine(storage storage.Storage, secret, token string) error {
 		for _, event := range events {
 			eventString, err := json.Marshal(event)
 			if err != nil {
+				log.Printf("[err] Could not marshal event: %+v; err: %s", event, err)
 				aelog.Infof(ctx, "[err] Could not marshal err: %s", err)
-				return
+				continue
 			}
 			err = storage.AddRawLineEvent(string(event.Type), event.ReplyToken, string(eventString))
 			if err != nil {
+				log.Printf("[err] Could not store event: %+v; err: %s", event, err)
 				aelog.Infof(ctx, "[err] Could store event err: %s", err)
-				return
+				continue
+			}
+
+			if event.Type == linebot.EventTypeFollow {
+				log.Printf("%v", event.Source)
+				aelog.Infof(ctx, "%v", event.Source)
 			}
 
 			if event.Type == linebot.EventTypeMessage {
@@ -55,6 +62,11 @@ func ServeAppEngine(storage storage.Storage, secret, token string) error {
 		}
 	})
 	http.Handle("/linewebhook", handler)
+	http.HandleFunc("/", testHandler)
 
 	return nil
+}
+
+func testHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "Hello, world!")
 }
