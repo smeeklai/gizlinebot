@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "vagabonddataninjas",
+  "private_key_id": "feeba296dc9a91808f60d9c807dca3022dbf42af",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCjE/xh+wTfsFo2\ndf+k9ubqImL6JiUi4SH1cWW4fXnshWVeHfa4wc36gihDFdDj4c1H3XRCZO5Ngz0u\nOWGibfAe2SzDag5Szkf1EG7KBBaWg2Pc9Ljp33ZjcGwyvDgoFq2tZLtOY2RTDH1k\nAJkKOXic1xJOniSA/224r3nkWIFS5U84knrnKrWAX/0FCzbZGaNig5L7zr1vgZMy\nQp5H58m3p47HLXFrdjsOk8JAmKv85FXd1mL1rwDH5+bF4zo0i6+oB7bo49CyjOcj\nwKBP6icGB7jTstsdUzSWqliGPgzvpYgeGtY4kuoVBkfy3XbDx2D9s6gDZF8WHyrA\nPTm2vyRlAgMBAAECggEACKkgj7GNljWe7OKCY6frJocR+5f4A+yx6X+Ot+gOCBYj\nhoaP2ksMnd+4tKtdbyTISqdDq90BXON55dENUtuE05aUDoK85P/oiWbIg3kJHBA5\nRvxGL8F635gSXvVpBBQEQD+nxOd5ZgG1TRDND+Jyed3gLoWuiZ1HHfZPwmVC5PyL\n6B9wzahCpr3s+IpJOxO87ZgPKdaHVrd0UnxTDPdy/PCNeIZgKM5j2lri5auGYHi0\nbqtNBIRuIXloQq+6eVRYllyKyK2t+8varwvK1dS4eBx/ByrpcMtqS7oC+Gpe9XPZ\nTzEHSf9OJBLSnOH26aqw8P4+8kVuD3IPbYjE1ztpBwKBgQDW4uSrYqAfW7SUejqQ\noPxHD6u6i6p0JQeiM/3bOIgLkEd3/46kUz60wUiTeTjdKbYapmH7ME1zPwqpjGCV\nlu4ZcG5ve0+g77cn5ZA/I2TbuWfwiEQYIxm8jgF9NFo/qWebNojKVCR13XlOdQ9H\neIiEbjr5gIu7ijeMFKLs+lbFvwKBgQDCR4gCjlsfUZrFEvEtKV6jY0h47/+3tlHa\nMkJxP4Ojyxm+Ec841fql6VrUtZ302haqLhir5Ob3a7KiiVpANkmPGqVw+BTIDbk1\nx8VehFajwjzFMYKAp4/ZjeCrL15ZjWGnGaKPeeItzJuZDH3qxR1Zslu+QAhjDMwC\nlato8X6G2wKBgAnm8rqjFNXdF/kvmLtJb9amdjdmcDhh7HQhCTWs6Tf/Mgvpjt0r\nqNwTfBCvqVsnrOiVejZlB2ykHw2pFlpOVjJ959jjScwUv8/q2DbQnrkxVgTTgq/K\nDkmOEat/WhlM6SVR4gPQ1M1Jo2lmI4obl87idX1B2y6NM/oUiV16O71pAoGBAIgn\nK0lnTLL5NLcSXFUjHgDxbnPa9mJgcqKxAGFveqkKiELtJkWVqHAnxxE1KrrTMHkZ\njw7Af6E8J9fC3K4NnaWdrf4qzh2ZiIgJNefUZQek84Pa+7OAOs7joGU38C5gZ+R8\nkbFtYLZqI02yNHiYpcYbujHtnDMWX88b5yHHxL1rAoGBAMIxKVAmSBPEttVvNVhE\n3ZTQBVvs7O2VER+J/c8hM1aGOmyg/pYxjhvnNMeI2PHPASc/jThjI7TZI4htVMw+\nA/Tw93kjRpn9dG1NrYdZQRPoEKNMJByzNiQ8/xOHOvapMaBW9pWIzi91s1A25g+7\nQ8dTDT6/UOhzfn4t52APt/rC\n-----END PRIVATE KEY-----\n",
+  "client_email": "my-account@vagabonddataninjas.iam.gserviceaccount.com",
+  "client_id": "101191930004880974777",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/my-account%40vagabonddataninjas.iam.gserviceaccount.com"
+}
