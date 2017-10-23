@@ -5,7 +5,7 @@
 **You can skip this part if you prefer to use [Google Cloud Shell](https://cloud.google.com/shell/docs/quickstart) instead**
 
 1. Follow instruction [here](https://cloud.google.com/appengine/docs/standard/go/download)
-2. If you have installed the Google Cloud SDK on your machine, run the command `gcloud auth 
+2. If you have installed the Google Cloud SDK on your machine, run the command `gcloud auth application-default login`
 
 ### Create your new yaml file
 ```
