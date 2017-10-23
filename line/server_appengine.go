@@ -10,7 +10,6 @@ import (
 	aelog "google.golang.org/appengine/log"
 	"google.golang.org/appengine/urlfetch"
 
-	// "github.com/VagabondDataNinjas/gizlinebot/storage"
 	"github.com/line/line-bot-sdk-go/linebot"
 	"github.com/line/line-bot-sdk-go/linebot/httphandler"
 	"github.com/smeeklai/gizlinebot/storage"
@@ -46,42 +45,33 @@ func ServeAppEngine(storage storage.Storage, surv *survey.Survey, secret, token 
 					aelog.Infof(ctx, "[err] Could not store event: %+v; err: %s", event, err)
 				}
 			}
-			// eventString, err := json.Marshal(event)
-			// if err != nil {
-			// 	log.Printf("[err] Could not marshal event: %+v; err: %s", event, err)
-			// 	aelog.Infof(ctx, "[err] Could not marshal err: %s", err)
-			// 	continue
-			// }
-			// err = storage.AddRawLineEvent(string(event.Type), event.ReplyToken, string(eventString))
-			// if err != nil {
-			// 	log.Printf("[err] Could not store event: %+v; err: %s", event, err)
-			// 	aelog.Infof(ctx, "[err] Could store event err: %s", err)
-			// 	continue
-			// }
 
 			if event.Type == linebot.EventTypeFollow {
 				userProfileResp, err := bot.GetProfile(userId).Do()
 				if err != nil {
 					log.Print(err)
+					aelog.Infof(ctx, "err: %s\n", err)
 					continue
 				}
 
 				err = storage.AddUserProfile(userProfileResp.UserID, userProfileResp.DisplayName)
 				if err != nil {
 					fmt.Printf("AddUserProfile err: %s\n", err)
+					aelog.Infof(ctx, "AddUserProfile err: %s\n", err)
 					continue
 				}
 
 				question, err := surv.GetNextQuestion(userId)
 				if err != nil {
 					log.Print(err)
+					aelog.Infof(ctx, "err: %s\n", err)
 					continue
 				}
 				if _, err = bot.PushMessage(userId, linebot.NewTextMessage(question.Text)).Do(); err != nil {
 					log.Print(err)
+					aelog.Infof(ctx, "err: %s\n", err)
 					continue
 				}
-				// aelog.Infof(ctx, "%v", event.Source)
 			}
 
 			if event.Type == linebot.EventTypeMessage {
@@ -90,18 +80,21 @@ func ServeAppEngine(storage storage.Storage, surv *survey.Survey, secret, token 
 					err = surv.RecordAnswer(userId, message.Text)
 					if err != nil {
 						log.Print(err)
+						aelog.Infof(ctx, "err: %s\n", err)
 						break
 					}
 
 					question, err := surv.GetNextQuestion(userId)
 					if err != nil {
 						log.Print(err)
+						aelog.Infof(ctx, "err: %s\n", err)
 						break
 					}
 					fmt.Printf("\nUser [id: %s] said: %s", userId, message.Text)
 
 					if _, err = bot.PushMessage(userId, linebot.NewTextMessage(question.Text)).Do(); err != nil {
 						log.Print(err)
+						aelog.Infof(ctx, "err: %s\n", err)
 					}
 				}
 			}
