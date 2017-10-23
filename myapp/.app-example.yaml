@@ -10,8 +10,8 @@ handlers:
   script: _go_app
 
 env_variables:
-  CHANNEL_SECRET: '0a650d4536e7aa9b2c9ae7e86ffabef5'
-  CHANNEL_TOKEN: 'f1lUZtjh+5v5LM6v0DOXwZj2n64Xdkdc4KN+Uk64ovGa9+2ukidruy2u9PJBORuhQmZVr8WGNN1nZZDUA/ndw/7ueDsof9Hhe5XH0y6DNKDlgs8ysC9q9loH0MGuryWGgBEh9NDk5QVWtpvwApMsxwdB04t89/1O/w1cDnyilFU='
+  CHANNEL_SECRET: ''
+  CHANNEL_TOKEN: ''
   CLOUDSQL_CONNECTION_NAME: vagabonddataninjas:asia-east1:gizsurvey
   CLOUDSQL_USER: gizlinebot
   CLOUDSQL_PASSWORD: 'Mpmc3EzwUU06Pq9hq8T55fEnaN2okglRd5CPS2i4fcA'
