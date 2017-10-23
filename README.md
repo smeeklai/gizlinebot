@@ -5,7 +5,7 @@
 **You can skip this part if you prefer to use [Google Cloud Shell](https://cloud.google.com/shell/docs/quickstart) instead**
 
 1. Follow instruction [here](https://cloud.google.com/appengine/docs/standard/go/download)
-2. If you have installed the Google Cloud SDK on your machine and have run the command `gcloud auth application-default login`, your identity can be used as a proxy to test code calling APIs from that machine
+2. If you have installed the Google Cloud SDK on your machine, run the command `gcloud auth 
 
 ### Create your new yaml file
 ```
