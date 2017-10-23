@@ -1,6 +1,6 @@
 # GIZ Line Bot (App Engine)
 
-##Setting up
+## Setting up
 #### Install and initialize Google Cloud SDK
 **You can skip this part if you prefer to use [Google Cloud Shell](https://cloud.google.com/shell/docs/quickstart) instead**
 
