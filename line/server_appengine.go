@@ -14,9 +14,10 @@ import (
 	"github.com/line/line-bot-sdk-go/linebot"
 	"github.com/line/line-bot-sdk-go/linebot/httphandler"
 	"github.com/smeeklai/gizlinebot/storage"
+	"github.com/smeeklai/gizlinebot/survey"
 )
 
-func ServeAppEngine(storage storage.Storage, secret, token string) error {
+func ServeAppEngine(storage storage.Storage, surv *survey.Survey, secret, token string) error {
 	handler, err := httphandler.New(secret, token)
 	if err != nil {
 		return err
@@ -32,30 +33,75 @@ func ServeAppEngine(storage storage.Storage, secret, token string) error {
 			return
 		}
 		for _, event := range events {
+			userId := event.Source.UserID
 			eventString, err := json.Marshal(event)
 			if err != nil {
 				log.Printf("[err] Could not marshal event: %+v; err: %s", event, err)
-				aelog.Infof(ctx, "[err] Could not marshal err: %s", err)
-				continue
+				aelog.Infof(ctx, "[err] Could not marshal event: %+v; err: %s", event, err)
+			} else {
+				log.Printf("\nEvent string: %s\n", eventString)
+				err = storage.AddRawLineEvent(string(event.Type), string(eventString))
+				if err != nil {
+					log.Printf("[err] Could not store event: %+v; err: %s", event, err)
+					aelog.Infof(ctx, "[err] Could not store event: %+v; err: %s", event, err)
+				}
 			}
-			err = storage.AddRawLineEvent(string(event.Type), event.ReplyToken, string(eventString))
-			if err != nil {
-				log.Printf("[err] Could not store event: %+v; err: %s", event, err)
-				aelog.Infof(ctx, "[err] Could store event err: %s", err)
-				continue
-			}
+			// eventString, err := json.Marshal(event)
+			// if err != nil {
+			// 	log.Printf("[err] Could not marshal event: %+v; err: %s", event, err)
+			// 	aelog.Infof(ctx, "[err] Could not marshal err: %s", err)
+			// 	continue
+			// }
+			// err = storage.AddRawLineEvent(string(event.Type), event.ReplyToken, string(eventString))
+			// if err != nil {
+			// 	log.Printf("[err] Could not store event: %+v; err: %s", event, err)
+			// 	aelog.Infof(ctx, "[err] Could store event err: %s", err)
+			// 	continue
+			// }
 
 			if event.Type == linebot.EventTypeFollow {
-				log.Printf("%v", event.Source)
-				aelog.Infof(ctx, "%v", event.Source)
+				userProfileResp, err := bot.GetProfile(userId).Do()
+				if err != nil {
+					log.Print(err)
+					continue
+				}
+
+				err = storage.AddUserProfile(userProfileResp.UserID, userProfileResp.DisplayName)
+				if err != nil {
+					fmt.Printf("AddUserProfile err: %s\n", err)
+					continue
+				}
+
+				question, err := surv.GetNextQuestion(userId)
+				if err != nil {
+					log.Print(err)
+					continue
+				}
+				if _, err = bot.PushMessage(userId, linebot.NewTextMessage(question.Text)).Do(); err != nil {
+					log.Print(err)
+					continue
+				}
+				// aelog.Infof(ctx, "%v", event.Source)
 			}
 
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).WithContext(ctx).Do(); err != nil {
-						log.Printf("\nError: %s\n", err)
-						aelog.Errorf(ctx, "%v", err)
+					err = surv.RecordAnswer(userId, message.Text)
+					if err != nil {
+						log.Print(err)
+						break
+					}
+
+					question, err := surv.GetNextQuestion(userId)
+					if err != nil {
+						log.Print(err)
+						break
+					}
+					fmt.Printf("\nUser [id: %s] said: %s", userId, message.Text)
+
+					if _, err = bot.PushMessage(userId, linebot.NewTextMessage(question.Text)).Do(); err != nil {
+						log.Print(err)
 					}
 				}
 			}
